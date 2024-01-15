@@ -78,6 +78,8 @@ function deleteProduct(id) {
       // xoá thành công , gọi lại api lấy dssp mới nhất từ server
       fetchProductList();
       console.log("😀 - res", res.data);
+      turnOffLoading();
+
     })
     .catch(function (err) {
       turnOffLoading();
@@ -117,6 +119,8 @@ function createProduct() {
       // tắt modal sau khi thêm thành công
       $("#myModal").modal("hide");
       resetForm();
+      turnOffLoading();
+
     })
     .catch(function (err) {
       turnOffLoading();
@@ -128,7 +132,7 @@ function createProduct() {
 // khi user click button edit ~ get by id  ~ lấy thông tin chi tiết của 1 sp dựa vào id
 
 function editProduct(id) {
-
+  turnOnLoading();
   idEdited = id;
   axios({ url: `https://6597f7bd668d248edf23d034.mockapi.io/product/${id}`, method: "GET" })
     .then(function (res) {
@@ -140,13 +144,17 @@ function editProduct(id) {
       document.getElementById("TenSP").value = sp.name;
       document.getElementById("HinhSP").value = sp.img;
       document.getElementById("MoTaSP").value = sp.desc;
+      turnOffLoading();
+
     })
     .catch(function (err) {
       console.log("😀 - err", err);
+      turnOffLoading();
     });
 }
 
 function updateProduct() {
+  turnOnLoading();
   // lấy data user nhập
   var tenSp = document.getElementById("TenSP").value;
   var giaSp = document.getElementById("GiaSP").value;
@@ -170,10 +178,12 @@ function updateProduct() {
       // tắt modal
       $("#myModal").modal("hide");
       // render ddsp
+      turnOffLoading();
+
       fetchProductList();
     })
     .catch(function (err) {
-
+      turnOffLoading();
     });
 }
 
